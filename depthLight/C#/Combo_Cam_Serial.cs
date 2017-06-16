@@ -19,16 +19,15 @@ public class Combo_Cam_Serial : MonoBehaviour {
      //Camera
         //use this to find the correct camera
         //cams = WebCamTexture.devices;
-        // TODO WebCamTexture(string deviceName, int requestedWidth, int requestedHeight, int requestedFPS);
         usedCam = new WebCamTexture("USB2.0 PC CAMERA");
-       // Debug.Log("Yo "+cams[0].name+" ---------"+ cams[0].name + " ---------------- "+ cams[1].name + " ---------");
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = usedCam;
         usedCam.Play();
         trackedObj = control.GetComponent<SteamVR_TrackedObject>();
 
         //Serial Read
-        read = new SerialPort("COM3", 115200);
+        read = new SerialPort("COM3", 115200); 
+	//Comport needs to be a port less than 10 unless us use "\\\\.\\COM58" where the number can change
         read.RtsEnable = true;
         try
         {
@@ -44,9 +43,10 @@ public class Combo_Cam_Serial : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	//alculated half angle
         float halfAng = 14.04f;
        
-        if (controller.GetHairTrigger()) {
+        if (controller.GetHairTrigger()) { //When trigger is pulled
                 float dist = float.Parse(read.ReadLine()) / 100f;
                 // Debug.Log("Reading");
                 transform.localPosition = new Vector3(0, 0, dist);
@@ -56,10 +56,3 @@ public class Combo_Cam_Serial : MonoBehaviour {
         }
     }
 }
-/*
-      Texture2D _TextureFromCamera = new Texture2D(GetComponent<Renderer>().material.mainTexture.width,
-GetComponent<Renderer>().material.mainTexture.height);
-       _TextureFromCamera.SetPixels((GetComponent<Renderer>().material.mainTexture as WebCamTexture).GetPixels());
-       _TextureFromCamera.Apply();
-       Debug.Log(GetComponent<MeshCollider>().bounds.size);
-*/
