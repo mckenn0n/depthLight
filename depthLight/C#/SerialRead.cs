@@ -27,26 +27,5 @@ public class SerialRead : MonoBehaviour {
 	
 	void Update () {
         transform.localPosition = new Vector3(0, 0, float.Parse(read.ReadLine()));
-        /*
-        if (count == SIZE) {
-            Debug.Log("###################################################################################");
-            count = 0;
-            capped = true;
-        }
-        lastDistances[count] = float.Parse(read.ReadLine());
-        count++;
-        if (capped) {
-            averageDistance = lastDistances.Sum() / SIZE;
-            Debug.Log(averageDistance);
-        } else {
-            float sum = 0.0f;
-            for (int i = 0; i < count; i++) {
-                sum += lastDistances[i];
-            }
-            averageDistance = sum / count;
-            transform.localPosition = new Vector3(0, 0, averageDistance);//need to divide by 100
-            Debug.Log(averageDistance);
-        }
-        */
 	}
 }
