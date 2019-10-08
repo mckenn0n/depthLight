@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO.Ports;
@@ -67,14 +67,16 @@ public class Combo_Cam_Serial : MonoBehaviour {
         }
         return "COM9";
     }
-	// Update is called once per frame
     void FixedUpdate () {
         Debug.Log(usedCam.height + "  -----  " + usedCam.width);
         float halfAng = 22.79f; //Half angle of Camera
         if (controller.GetHairTrigger()) {
             try{
                 read.ReadTimeout = 1;
+                read.WriteLine("t");
                 float dist = float.Parse(read.ReadLine()) / 100f;
+                //Debug.Log("Reading");
+                //Debug.Log(dist);
                 transform.localPosition = new Vector3(0, 0, dist);
                 scale = (Mathf.Tan(Mathf.PI / 180 * halfAng) * dist) * 2;
                 transform.localScale = new Vector3(scale, .0000001f, scale);
