@@ -8,26 +8,21 @@ public class Combo_Cam_Serial : MonoBehaviour {
     public float scale;
     public SerialPort read;
     WebCamTexture usedCam;
-    //WebCamDevice[] cams;
+    WebCamDevice[] cams;
     public GameObject control;
     private SteamVR_Controller.Device controller { get { return SteamVR_Controller.Input((int)trackedObj.index); } }
     private SteamVR_TrackedObject trackedObj;
 
-    // Use this for initialization
-
-    void Start () {
-     //Camera
-        //use this to find the correct camera
-        //cams = WebCamTexture.devices;
-        usedCam = new WebCamTexture("USB2.0 PC CAMERA");
+    void Start() {
+        usedCam = new WebCamTexture("Logitech HD Webcam C310", 1280, 960);
+        WebCamDevice[] devices = WebCamTexture.devices;
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = usedCam;
         usedCam.Play();
         trackedObj = control.GetComponent<SteamVR_TrackedObject>();
 
         //Serial Read
-        read = new SerialPort("COM3", 115200); 
-	//Comport needs to be a port less than 10 unless us use "\\\\.\\COM58" where the number can change
+        read = new SerialPort(AutodetectArduinoPort(), 115200);
         read.RtsEnable = true;
         try
         {
